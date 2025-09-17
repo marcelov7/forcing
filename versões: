@@ -1,0 +1,14 @@
+[0;1;32m●[0m php8.2-fpm.service - The PHP 8.2 FastCGI Process Manager
+     Loaded: loaded (]8;;file://srv870604/usr/lib/systemd/system/php8.2-fpm.service/usr/lib/systemd/system/php8.2-fpm.service]8;;; [0;1;32menabled[0m; preset: [0;1;32menabled[0m)
+     Active: [0;1;32mactive (running)[0m since Thu 2025-07-24 01:09:45 UTC; 12h ago
+       Docs: ]8;;man:php-fpm8.2(8)man:php-fpm8.2(8)]8;;
+   Main PID: 82929 (php-fpm8.2)
+     Status: "[0;1;36mProcesses active: 0, idle: 0, Requests: 0, slow: 0, Traffic: 0.00req/sec[0m"
+      Tasks: 1 (limit: 9485)
+     Memory: 19.0M (peak: 19.2M)
+        CPU: 3.918s
+     CGroup: /system.slice/php8.2-fpm.service
+             └─[0;38;5;245m82929 "php-fpm: master process (/etc/php/8.2/fpm/php-fpm.conf)"[0m
+
+Jul 24 01:09:45 srv870604 systemd[1]: Starting php8.2-fpm.service - The PHP 8.2 FastCGI Process Manager...
+Jul 24 01:09:45 srv870604 systemd[1]: Started php8.2-fpm.service - The PHP 8.2 FastCGI Process Manager.

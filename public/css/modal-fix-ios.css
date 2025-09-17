@@ -1,0 +1,389 @@
+/* Modal Fix para iOS V3 - Z-index definitivo e controle daltonismo */
+
+/* Z-INDEX HIERARCHY DEFINITIVA */
+:root {
+    --z-modal: 99999;
+    --z-modal-backdrop: 99998;
+    --z-modal-content: 99997;
+    --z-modal-buttons: 99996;
+    --z-colorblind-normal: 1050;
+    --z-colorblind-hidden: 999;
+}
+
+/* MODAL PRINCIPAL - Z-INDEX MÁXIMO */
+.modal {
+    z-index: var(--z-modal) !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* BACKDROP DA MODAL */
+.modal-backdrop {
+    z-index: var(--z-modal-backdrop) !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* DIALOG E CONTENT */
+.modal-dialog {
+    position: relative !important;
+    z-index: var(--z-modal-content) !important;
+    margin: 0 !important;
+    width: 90% !important;
+    max-width: 500px !important;
+    max-height: 90vh !important;
+    transform: none !important;
+}
+
+.modal-content {
+    position: relative !important;
+    z-index: var(--z-modal-content) !important;
+    pointer-events: auto !important;
+}
+
+/* BOTÕES DA MODAL - Z-INDEX ALTO */
+.modal .btn,
+.modal button,
+.modal input[type="submit"],
+.modal input[type="button"] {
+    position: relative !important;
+    z-index: var(--z-modal-buttons) !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+    min-height: 44px !important;
+    min-width: 44px !important;
+    padding: 8px 16px !important;
+}
+
+/* INPUTS DA MODAL */
+.modal input,
+.modal select,
+.modal textarea {
+    position: relative !important;
+    z-index: var(--z-modal-buttons) !important;
+    background-color: white !important;
+    border: 1px solid #ced4da !important;
+    padding: 8px 12px !important;
+}
+
+/* CONTROLE DO BOTÃO DALTONISMO */
+#colorblind-toggle-btn {
+    z-index: var(--z-colorblind-normal) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* ESCONDER BOTÃO DALTONISMO QUANDO MODAL ABERTA */
+.modal-open #colorblind-toggle-btn,
+body.modal-open #colorblind-toggle-btn {
+    z-index: var(--z-colorblind-hidden) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    user-select: none !important;
+}
+
+/* ANULAR TODAS AS REGRAS CONFLITANTES DE Z-INDEX */
+.modal,
+.modal *,
+.modal .modal-dialog,
+.modal .modal-content {
+    /* Forçar hierarquia correta */
+    z-index: inherit !important;
+}
+
+.modal {
+    /* Re-aplicar z-index da modal principal */
+    z-index: var(--z-modal) !important;
+}
+
+/* Específico para iOS - ANULAR REGRAS CONFLITANTES */
+@supports (-webkit-touch-callout: none) {
+    .modal {
+        z-index: var(--z-modal) !important;
+        -webkit-transform: translateZ(0) !important;
+        transform: translateZ(0) !important;
+    }
+    
+    .modal-backdrop {
+        z-index: var(--z-modal-backdrop) !important;
+    }
+    
+    .modal-dialog {
+        z-index: var(--z-modal-content) !important;
+        -webkit-transform: translateZ(0) !important;
+        transform: translateZ(0) !important;
+    }
+    
+    /* Botões em iOS */
+    .modal .btn,
+    .modal button {
+        z-index: var(--z-modal-buttons) !important;
+        -webkit-appearance: none !important;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1) !important;
+        -webkit-touch-callout: none !important;
+        border-radius: 6px !important;
+        cursor: pointer !important;
+    }
+    
+    /* Feedback visual para toque */
+    .modal .btn:active,
+    .modal button:active {
+        transform: scale(0.98) !important;
+        transition: transform 0.1s ease !important;
+    }
+    
+    /* Prevenir zoom em inputs */
+    .modal input,
+    .modal select,
+    .modal textarea {
+        font-size: 16px !important;
+        -webkit-appearance: none !important;
+        border-radius: 6px !important;
+    }
+    
+    /* Garantir que botão daltonismo fique escondido */
+    .modal-open #colorblind-toggle-btn {
+        z-index: var(--z-colorblind-hidden) !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        -webkit-user-select: none !important;
+    }
+}
+
+/* Mobile específico */
+@media screen and (max-width: 768px) {
+    .modal-dialog {
+        width: 95% !important;
+        max-width: none !important;
+        margin: 10px !important;
+    }
+    
+    .modal-content {
+        max-height: 90vh !important;
+        overflow-y: auto !important;
+        border-radius: 10px !important;
+    }
+    
+    .modal-body {
+        max-height: 70vh !important;
+        overflow-y: auto !important;
+        padding: 15px !important;
+    }
+    
+    /* Botões maiores em mobile */
+    .modal .btn,
+    .modal button {
+        min-height: 48px !important;
+        font-size: 16px !important;
+        margin: 4px 2px !important;
+    }
+    
+    /* Footer com botões empilhados em mobile */
+    .modal-footer {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+    
+    .modal-footer .btn {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+}
+
+/* iPhone específico */
+@media screen and (max-width: 480px) {
+    .modal-dialog {
+        width: 98% !important;
+        margin: 5px !important;
+    }
+    
+    .modal-header {
+        padding: 10px 15px !important;
+        border-bottom: 1px solid #dee2e6 !important;
+    }
+    
+    .modal-footer {
+        padding: 15px !important;
+        border-top: 1px solid #dee2e6 !important;
+    }
+    
+    /* Botões ainda maiores no iPhone */
+    .modal .btn,
+    .modal button {
+        min-height: 50px !important;
+        font-size: 18px !important;
+        font-weight: 600 !important;
+    }
+}
+
+/* Evitar scroll body quando modal aberta */
+body.modal-open {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Focus states melhorados */
+.modal input:focus,
+.modal select:focus,
+.modal textarea:focus {
+    outline: none !important;
+    border-color: #0d6efd !important;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25) !important;
+    z-index: var(--z-modal-buttons) !important;
+}
+
+.modal .btn:focus,
+.modal button:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25) !important;
+    z-index: var(--z-modal-buttons) !important;
+}
+
+/* Animação suave */
+.modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out !important;
+}
+
+.modal.show .modal-dialog {
+    transform: none !important;
+}
+
+/* Botão fechar sempre visível */
+.modal-header .btn-close,
+.modal-header .close {
+    z-index: var(--z-modal-buttons) !important;
+    position: relative !important;
+    min-height: 44px !important;
+    min-width: 44px !important;
+    border: none !important;
+    background: none !important;
+    font-size: 24px !important;
+    opacity: 0.7 !important;
+}
+
+.modal-header .btn-close:hover,
+.modal-header .close:hover {
+    opacity: 1 !important;
+}
+
+/* Prevenir seleção de texto indesejada */
+.modal .btn,
+.modal button,
+.modal-header {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+/* Fix para backdrop clicks */
+.modal {
+    pointer-events: auto !important;
+}
+
+.modal-dialog {
+    pointer-events: none !important;
+}
+
+.modal-content {
+    pointer-events: auto !important;
+}
+
+/* Estados de botão específicos */
+.btn-primary {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+    color: white !important;
+}
+
+.btn-primary:hover,
+.btn-primary:active {
+    background-color: #0b5ed7 !important;
+    border-color: #0a58ca !important;
+}
+
+.btn-secondary {
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+    color: white !important;
+}
+
+.btn-secondary:hover,
+.btn-secondary:active {
+    background-color: #5c636a !important;
+    border-color: #565e64 !important;
+}
+
+/* Loading state para botões */
+.btn.loading {
+    opacity: 0.7 !important;
+    pointer-events: none !important;
+}
+
+.btn.loading::after {
+    content: "" !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin-left: 8px !important;
+    border: 2px solid transparent !important;
+    border-top-color: currentColor !important;
+    border-radius: 50% !important;
+    animation: spin 1s linear infinite !important;
+    display: inline-block !important;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* GARANTIR QUE NADA SOBRESCREVA O Z-INDEX DA MODAL */
+.modal,
+.modal * {
+    /* Reset z-index conflicts */
+    z-index: auto !important;
+}
+
+.modal {
+    /* Re-aplicar z-index máximo */
+    z-index: var(--z-modal) !important;
+}
+
+.modal-backdrop {
+    z-index: var(--z-modal-backdrop) !important;
+}
+
+.modal .modal-dialog {
+    z-index: var(--z-modal-content) !important;
+}
+
+.modal .modal-content {
+    z-index: var(--z-modal-content) !important;
+}
+
+.modal .btn,
+.modal button,
+.modal input,
+.modal select,
+.modal textarea {
+    z-index: var(--z-modal-buttons) !important;
+} 

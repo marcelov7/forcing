@@ -1,0 +1,14 @@
+[0;1;32m●[0m php8.4-fpm.service - The PHP 8.4 FastCGI Process Manager
+     Loaded: loaded (]8;;file://srv870604/usr/lib/systemd/system/php8.4-fpm.service/usr/lib/systemd/system/php8.4-fpm.service]8;;; [0;1;32menabled[0m; preset: [0;1;32menabled[0m)
+     Active: [0;1;32mactive (running)[0m since Thu 2025-07-24 13:35:08 UTC; 11ms ago
+       Docs: ]8;;man:php-fpm8.4(8)man:php-fpm8.4(8)]8;;
+   Main PID: 93344 (php-fpm8.4)
+     Status: "[0;1;36mReady to handle connections[0m"
+      Tasks: 1 (limit: 9485)
+     Memory: 19.9M (peak: 20.1M)
+        CPU: 66ms
+     CGroup: /system.slice/php8.4-fpm.service
+             └─[0;38;5;245m93344 "php-fpm: master process (/etc/php/8.4/fpm/php-fpm.conf)"[0m
+
+Jul 24 13:35:08 srv870604 systemd[1]: Starting php8.4-fpm.service - The PHP 8.4 FastCGI Process Manager...
+Jul 24 13:35:08 srv870604 systemd[1]: Started php8.4-fpm.service - The PHP 8.4 FastCGI Process Manager.

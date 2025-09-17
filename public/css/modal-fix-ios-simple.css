@@ -1,0 +1,49 @@
+/* Modal Fix V4 - CSS Super Simplificado */
+
+/* APENAS Z-INDEX - SEM INTERFERÊNCIAS */
+
+/* Modal principal com z-index alto */
+.modal {
+    z-index: 50000 !important;
+}
+
+/* Backdrop da modal */
+.modal-backdrop {
+    z-index: 49999 !important;
+}
+
+/* Controle do botão daltonismo */
+#colorblind-toggle-btn {
+    z-index: 1050;
+    transition: opacity 0.3s ease;
+}
+
+/* Esconder botão daltonismo quando modal aberta */
+.modal-open #colorblind-toggle-btn {
+    z-index: 999 !important;
+    opacity: 0.3 !important;
+    pointer-events: none !important;
+}
+
+/* Mobile responsivo básico */
+@media screen and (max-width: 768px) {
+    .modal-dialog {
+        margin: 10px;
+        width: calc(100% - 20px);
+    }
+    
+    .modal-content {
+        border-radius: 10px;
+    }
+}
+
+/* iPhone específico */
+@media screen and (max-width: 480px) {
+    .modal-dialog {
+        margin: 5px;
+        width: calc(100% - 10px);
+    }
+}
+
+/* NENHUMA INTERFERÊNCIA EM BOTÕES OU INPUTS */
+/* Deixar Bootstrap gerenciar tudo normalmente */ 
