@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Forcing;
+use App\Models\LogicChange;
 use App\Policies\ForcingPolicy;
+use App\Policies\LogicChangePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -15,6 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Forcing::class => ForcingPolicy::class,
+        LogicChange::class => LogicChangePolicy::class,
     ];
 
     /**

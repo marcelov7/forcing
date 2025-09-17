@@ -9,6 +9,18 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <!-- CSS customizado removido temporariamente para debug -->
+    <style>
+        .navbar-nav .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            font-weight: 500;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -25,21 +37,27 @@
                 <ul class="navbar-nav me-auto">
                     @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('forcing.index') }}">
+                            <a class="nav-link {{ request()->routeIs('forcing.*') ? 'active' : '' }}" href="{{ route('forcing.index') }}">
                                 <i class="fas fa-list"></i> Forcing
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('logic-changes.*') ? 'active' : '' }}" href="{{ route('logic-changes.index') }}">
+                                <i class="fas fa-cogs"></i> Alterações de Lógica
                             </a>
                         </li>
                         
                         @if(auth()->user()->perfil === 'admin')
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('users.index') }}">
+                                <a class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">
                                     <i class="fas fa-users"></i> Usuários
                                 </a>
                             </li>
                         @endif
                         @if(auth()->user()->is_super_admin)
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.units.index') }}">
+                                <a class="nav-link {{ request()->routeIs('admin.*') ? 'active' : '' }}" href="{{ route('admin.units.index') }}">
                                     <i class="fas fa-building"></i> Unidades
                                 </a>
                             </li>

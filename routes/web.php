@@ -46,6 +46,24 @@ Route::middleware('auth')->group(function () {
     // Rotas de usuários (apenas admin)
     Route::resource('users', UserController::class)->middleware('check.profile:admin');
     
+    // Rotas de alterações de lógica
+    Route::resource('logic-changes', \App\Http\Controllers\LogicChangeController::class);
+    Route::delete('/logic-changes/{logicChange}/remove-file', [\App\Http\Controllers\LogicChangeController::class, 'removeFile'])->name('logic-changes.remove-file');
+    
+    // Rotas de aprovação
+    Route::patch('/logic-changes/{logicChange}/approve-manager', [\App\Http\Controllers\LogicChangeController::class, 'approveAsManager'])->name('logic-changes.approve-manager');
+    Route::patch('/logic-changes/{logicChange}/approve-coordinator', [\App\Http\Controllers\LogicChangeController::class, 'approveAsCoordinator'])->name('logic-changes.approve-coordinator');
+    Route::patch('/logic-changes/{logicChange}/approve-specialist', [\App\Http\Controllers\LogicChangeController::class, 'approveAsSpecialist'])->name('logic-changes.approve-specialist');
+    
+    // Páginas de aprovação para mobile
+    Route::get('/logic-changes/{logicChange}/approve-manager-page', [\App\Http\Controllers\LogicChangeController::class, 'approveAsManagerPage'])->name('logic-changes.approve-manager-page');
+    Route::get('/logic-changes/{logicChange}/approve-coordinator-page', [\App\Http\Controllers\LogicChangeController::class, 'approveAsCoordinatorPage'])->name('logic-changes.approve-coordinator-page');
+    Route::get('/logic-changes/{logicChange}/approve-specialist-page', [\App\Http\Controllers\LogicChangeController::class, 'approveAsSpecialistPage'])->name('logic-changes.approve-specialist-page');
+    
+    // Rota para marcar como implementado
+    Route::patch('/logic-changes/{logicChange}/mark-implemented', [\App\Http\Controllers\LogicChangeController::class, 'markAsImplemented'])->name('logic-changes.mark-implemented');
+    Route::get('/logic-changes/{logicChange}/mark-implemented-page', [\App\Http\Controllers\LogicChangeController::class, 'markAsImplementedPage'])->name('logic-changes.mark-implemented-page');
+    
     // Perfil do usuário atual
     Route::get('/profile', [UserController::class, 'showProfile'])->name('profile.show');
     Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
