@@ -1,0 +1,49 @@
+# Comandos para Deploy no Servidor forcing.devaxis.com.br
+# Execute estes comandos em sequência no terminal do servidor
+
+# 1. Navegar para o diretório do projeto
+cd /home/devaxis-forcing/htdocs/forcing.devaxis.com.br
+
+# 2. Fazer backup do .env (importante!)
+cp .env .env.backup.$(date +%Y%m%d_%H%M%S)
+
+# 3. Fazer pull das alterações do Git
+git pull origin main
+
+# 4. Instalar/atualizar dependências do Composer
+composer install --optimize-autoloader --no-dev
+
+# 5. Instalar dependências NPM e compilar assets
+npm install
+npm run build
+
+# 6. Executar script de permissões (se disponível)
+chmod +x deploy-permissions.sh
+./deploy-permissions.sh
+
+# OU configurar permissões manualmente:
+chmod -R 775 storage/
+chmod -R 775 bootstrap/cache/
+chown -R devaxis-forcing:devaxis-forcing storage/
+chown -R devaxis-forcing:devaxis-forcing bootstrap/cache/
+
+# 7. Executar migrações (se houver novas)
+php artisan migrate --force
+
+# 8. Limpar e recriar caches
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+
+# 9. Recriar caches otimizados
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+
+# 10. Otimizar autoloader
+php artisan optimize
+
+# 11. Verificar se tudo está funcionando
+php artisan --version
+tail -f storage/logs/laravel.log
