@@ -67,21 +67,25 @@
         <div class="col-lg-7 col-md-6 bg-gradient-primary d-flex align-items-center">
             <div class="tools-gallery w-100 p-5">
                 <div class="text-center mb-5">
-                    <h3 class="text-white fw-bold mb-3">Ecossistema DevAxis</h3>
-                    <p class="text-white-50 fs-5">Acesse nossas ferramentas integradas</p>
+                    <h3 class="text-white fw-bold mb-3">
+                        <i class="fas fa-industry me-2"></i>Automação Industrial
+                    </h3>
+                    <p class="text-white-50 fs-5">Controle e proteção de sistemas elétricos</p>
                 </div>
 
                 <div class="row g-4">
                     <!-- Sistema de Forcing - Atual -->
                     <div class="col-12">
-                        <div class="tool-card active">
-                            <div class="tool-icon">
-                                <i class="fas fa-exclamation-triangle"></i>
+                        <div class="tool-card active electrical-active">
+                            <div class="tool-icon electrical-icon">
+                                <i class="fas fa-bolt"></i>
                             </div>
                             <div class="tool-content">
                                 <h5>Sistema de Forcing</h5>
-                                <p class="mb-0">Controle e gestão de operações críticas</p>
-                                <span class="badge bg-success ms-2">Atual</span>
+                                <p class="mb-0">Controle de proteções elétricas</p>
+                                <span class="badge electrical-badge-active ms-2">
+                                    <i class="fas fa-power-off me-1"></i>ATIVO
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -89,14 +93,14 @@
                     <!-- Sistema de Relatórios -->
                     <div class="col-12">
                         <a href="https://app.devaxis.com.br" target="_blank" class="text-decoration-none">
-                            <div class="tool-card">
-                                <div class="tool-icon">
-                                    <i class="fas fa-chart-bar"></i>
+                            <div class="tool-card electrical-secondary">
+                                <div class="tool-icon electrical-icon-secondary">
+                                    <i class="fas fa-chart-line"></i>
                                 </div>
                                 <div class="tool-content">
                                     <h5>Sistema de Relatórios</h5>
-                                    <p class="mb-0">Análises e dashboards completos</p>
-                                    <span class="external-link">
+                                    <p class="mb-0">Análises de performance elétrica</p>
+                                    <span class="external-link electrical-link">
                                         <i class="fas fa-external-link-alt ms-2"></i>
                                     </span>
                                 </div>
@@ -104,16 +108,18 @@
                         </a>
                     </div>
 
-                    <!-- Placeholder para futuras ferramentas -->
+                    <!-- Automação Industrial -->
                     <div class="col-12">
-                        <div class="tool-card coming-soon">
-                            <div class="tool-icon">
-                                <i class="fas fa-cogs"></i>
+                        <div class="tool-card coming-soon electrical-coming">
+                            <div class="tool-icon electrical-icon-warning">
+                                <i class="fas fa-microchip"></i>
                             </div>
                             <div class="tool-content">
-                                <h5>Mais Ferramentas</h5>
-                                <p class="mb-0">Novas funcionalidades em desenvolvimento</p>
-                                <span class="badge bg-warning text-dark ms-2">Em Breve</span>
+                                <h5>Automação Industrial</h5>
+                                <p class="mb-0">Controladores PLC e SCADA</p>
+                                <span class="badge electrical-badge-warning ms-2">
+                                    <i class="fas fa-wrench me-1"></i>EM DESENVOLVIMENTO
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -122,7 +128,7 @@
                 <div class="text-center mt-5">
                     <p class="text-white-50 small">
                         <i class="fas fa-shield-alt me-2"></i>
-                        Ambiente seguro e confiável
+                        Sistemas certificados IEC 61850
                     </p>
                 </div>
             </div>
@@ -134,11 +140,28 @@
 @section('scripts')
 <style>
 .login-container {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1a202c 0%, #2d3748 50%, #1a365d 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+    pointer-events: none;
 }
 
 .bg-gradient-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    background: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #00D4FF 100%) !important;
+    position: relative;
 }
 
 .login-form-container {
@@ -172,15 +195,17 @@
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #00D4FF 0%, #0EA5E9 50%, #0284C7 100%);
     border: none;
     border-radius: 10px;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.5);
+    background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 50%, #0369A1 100%);
 }
 
 .tool-card {
@@ -250,6 +275,72 @@
 .external-link {
     color: rgba(255, 255, 255, 0.8);
     font-size: 12px;
+}
+
+/* Tema Elétrico/Industrial */
+.electrical-active {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(14, 165, 233, 0.15) 100%);
+    border: 1px solid rgba(0, 212, 255, 0.4);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+}
+
+.electrical-secondary {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.15) 0%, rgba(34, 197, 94, 0.1) 100%);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.electrical-coming {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(245, 158, 11, 0.08) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.electrical-icon {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.3) 0%, rgba(14, 165, 233, 0.2) 100%);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+}
+
+.electrical-icon-secondary {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.3) 0%, rgba(34, 197, 94, 0.2) 100%);
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+}
+
+.electrical-icon-warning {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(245, 158, 11, 0.2) 100%);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.electrical-badge-active {
+    background: linear-gradient(135deg, #00FF88 0%, #22C55E 100%);
+    color: #000;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+}
+
+.electrical-badge-warning {
+    background: linear-gradient(135deg, #FFD700 0%, #F59E0B 100%);
+    color: #000;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+}
+
+.electrical-link {
+    color: rgba(0, 255, 136, 0.8);
+}
+
+/* Efeitos de hover para tema elétrico */
+.electrical-active:hover {
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
+    transform: translateY(-5px);
+}
+
+.electrical-secondary:hover {
+    box-shadow: 0 0 25px rgba(0, 255, 136, 0.4);
+}
+
+.electrical-coming:hover {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
 }
 
 /* Mobile Responsiveness */
