@@ -17,6 +17,11 @@ Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('regi
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Rota para refresh de CSRF token (para problemas em mobile)
+Route::get('/csrf-token-refresh', function () {
+    return response()->json(['token' => csrf_token()]);
+})->name('csrf-token-refresh');
+
 // Rotas protegidas por autenticação
 Route::middleware('auth')->group(function () {
     
