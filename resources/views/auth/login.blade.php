@@ -145,6 +145,10 @@
     max-width: 450px;
 }
 
+.login-logo {
+    margin-top: 20px; /* Mais espaço do topo */
+}
+
 .login-logo i {
     animation: pulse 2s infinite;
 }
@@ -282,6 +286,10 @@
         color: #ffffff !important;
     }
     
+    .text-muted {
+        color: #b0b0b0 !important;
+    }
+    
     .card {
         background-color: #2d2d2d !important;
         border-color: #404040 !important;
@@ -289,6 +297,40 @@
     
     .card-footer {
         background-color: #404040 !important;
+    }
+    
+    .card-footer .text-muted {
+        color: #b0b0b0 !important;
+    }
+    
+    .form-label {
+        color: #ffffff !important;
+    }
+    
+    .form-control {
+        background-color: #404040 !important;
+        border-color: #555555 !important;
+        color: #ffffff !important;
+    }
+    
+    .form-control:focus {
+        background-color: #4a4a4a !important;
+        border-color: #667eea !important;
+        color: #ffffff !important;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25) !important;
+    }
+    
+    .form-control::placeholder {
+        color: #888888 !important;
+    }
+    
+    /* Links no dark mode */
+    .card-footer a {
+        color: #667eea !important;
+    }
+    
+    .card-footer a:hover {
+        color: #5a6fd8 !important;
     }
 }
 </style>

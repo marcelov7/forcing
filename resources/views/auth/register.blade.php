@@ -9,7 +9,7 @@
         <div class="col-lg-7 col-md-8 d-flex align-items-center justify-content-center bg-white">
             <div class="register-form-container w-100 px-4">
                 <div class="text-center mb-4">
-                    <div class="login-logo mb-3">
+                    <div class="login-logo mb-3" style="margin-top: 20px;">
                         <i class="fas fa-user-plus fa-3x text-success"></i>
                     </div>
                     <h2 class="fw-bold text-dark">Criar Nova Conta</h2>
@@ -289,6 +289,64 @@
     
     .tool-icon-compact i {
         font-size: 16px;
+    }
+}
+
+/* Dark mode support para Register */
+@media (prefers-color-scheme: dark) {
+    .bg-white {
+        background-color: #1a1a1a !important;
+    }
+    
+    .text-dark {
+        color: #ffffff !important;
+    }
+    
+    .text-muted {
+        color: #b0b0b0 !important;
+    }
+    
+    .card {
+        background-color: #2d2d2d !important;
+        border-color: #404040 !important;
+    }
+    
+    .card-footer {
+        background-color: #404040 !important;
+    }
+    
+    .card-footer .text-muted {
+        color: #b0b0b0 !important;
+    }
+    
+    .form-label {
+        color: #ffffff !important;
+    }
+    
+    .form-control {
+        background-color: #404040 !important;
+        border-color: #555555 !important;
+        color: #ffffff !important;
+    }
+    
+    .form-control:focus {
+        background-color: #4a4a4a !important;
+        border-color: #28a745 !important;
+        color: #ffffff !important;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25) !important;
+    }
+    
+    .form-control::placeholder {
+        color: #888888 !important;
+    }
+    
+    /* Links no dark mode */
+    .card-footer a {
+        color: #28a745 !important;
+    }
+    
+    .card-footer a:hover {
+        color: #218838 !important;
     }
 }
 </style>
