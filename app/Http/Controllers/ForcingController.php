@@ -43,10 +43,13 @@ class ForcingController extends Controller
 
         $forcings = $query->orderBy('created_at', 'desc')->paginate(15);
 
+        // Contadores gerais para os cards (sem paginação)
+        $contadoresGerais = $this->obterContadoresGerais($user);
+
         // Dados para os filtros
         $filtroData = $this->obterDadosFiltros();
 
-        return view('forcing.index', array_merge(compact('forcings'), $filtroData));
+        return view('forcing.index', array_merge(compact('forcings', 'contadoresGerais'), $filtroData));
     }
 
     /**
@@ -68,6 +71,9 @@ class ForcingController extends Controller
 
             $forcings = $query->orderBy('created_at', 'desc')->paginate(15);
 
+            // Contadores gerais para os cards (sem paginação)
+            $contadoresGerais = $this->obterContadoresGerais($user);
+
             if ($request->ajax() || $request->wantsJson()) {
                 try {
                     $tableHtml = view('forcing.partials.table', compact('forcings'))->render();
@@ -79,6 +85,7 @@ class ForcingController extends Controller
                         'html' => $tableHtml,
                         'pagination' => $paginationHtml,
                         'modals' => $modalsHtml,
+                        'contadoresGerais' => $contadoresGerais,
                         'total' => $forcings->total(),
                         'current_page' => $forcings->currentPage(),
                         'last_page' => $forcings->lastPage(),
@@ -483,6 +490,51 @@ class ForcingController extends Controller
             'criadores' => User::orderBy('name')->get(['id', 'name']),
             'allUsers' => User::orderBy('name')->get(['id', 'name'])
         ];
+    }
+
+    /**
+     * Obtém contadores gerais de todos os forcings (sem paginação)
+     */
+    private function obterContadoresGerais($user)
+    {
+        // Função auxiliar para criar query base com filtro de unidade
+        $createBaseQuery = function() use ($user) {
+            $query = Forcing::query();
+            
+            // Aplicar filtro de unidade (multi-tenant)
+            if ($user->perfil !== 'admin' && $user->unit_id) {
+                $query->where('unit_id', $user->unit_id);
+            }
+            
+            return $query;
+        };
+
+        // Debug: verificar todos os status existentes
+        $baseQuery = $createBaseQuery();
+        $allStatus = $baseQuery->select('status')->distinct()->pluck('status')->toArray();
+        $allStatusExecucao = $baseQuery->select('status_execucao')->distinct()->pluck('status_execucao')->toArray();
+        
+        $contadores = [
+            'pendente' => $createBaseQuery()->where('status', 'pendente')->count(),
+            'liberado' => $createBaseQuery()->where('status', 'liberado')->count(),
+            'forcado' => $createBaseQuery()->where('status', 'forcado')->count(),
+            'solicitacao_retirada' => $createBaseQuery()->where('status', 'solicitacao_retirada')->count(),
+            'retirado' => $createBaseQuery()->where('status', 'retirado')->count(),
+            'executado' => $createBaseQuery()->where('status_execucao', 'executado')->count(),
+        ];
+
+        // Log para debug (remover em produção)
+        Log::info('Contadores gerais calculados:', [
+            'user_id' => $user->id,
+            'user_perfil' => $user->perfil,
+            'user_unit_id' => $user->unit_id,
+            'all_status_found' => $allStatus,
+            'all_status_execucao_found' => $allStatusExecucao,
+            'contadores' => $contadores,
+            'total_forcings' => $baseQuery->count()
+        ]);
+
+        return $contadores;
     }
 
     private function prepararDadosAtualizacao(Forcing $forcing, array $validatedData)

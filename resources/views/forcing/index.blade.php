@@ -11,7 +11,7 @@
         <small class="text-muted">Sistema de gerenciamento de forcing</small>
     </div>
     <div class="d-flex flex-column flex-sm-row gap-2">
-        <button id="refreshTableBtn" class="btn btn-outline-primary btn-sm" title="Atualizar Lista" onclick="window.location.reload();">
+        <button id="refreshTableBtn" class="btn btn-outline-primary btn-sm" title="Atualizar Lista">
             <i class="fas fa-sync-alt" id="refreshIcon"></i> 
             <span class="d-none d-sm-inline">Atualizar</span>
         </button>
@@ -604,12 +604,12 @@
         @endforeach
     </div>
 
-    <!-- Resumo dos status -->
+    <!-- Resumo dos status - Contadores gerais (não paginados) -->
     <div class="row mt-4">
         <div class="col-md-2">
             <div class="card bg-secondary text-white" data-status="pendente" title="Clique para filtrar">
                 <div class="card-body text-center">
-                    <h3 class="mb-0">{{ $forcings->where('status', 'pendente')->count() }}</h3>
+                    <h3 class="mb-0">{{ $contadoresGerais['pendente'] ?? 'N/A' }}</h3>
                     <p class="mb-0"><i class="fas fa-clock"></i> Pendente</p>
                 </div>
             </div>
@@ -617,7 +617,7 @@
         <div class="col-md-2">
             <div class="card bg-success text-white" data-status="liberado" title="Clique para filtrar">
                 <div class="card-body text-center">
-                    <h3 class="mb-0">{{ $forcings->where('status', 'liberado')->count() }}</h3>
+                    <h3 class="mb-0">{{ $contadoresGerais['liberado'] ?? 'N/A' }}</h3>
                     <p class="mb-0"><i class="fas fa-check"></i> Liberado</p>
                 </div>
             </div>
@@ -625,7 +625,7 @@
         <div class="col-md-2">
             <div class="card bg-warning text-white" data-status="forcado" title="Clique para filtrar">
                 <div class="card-body text-center">
-                    <h3 class="mb-0">{{ $forcings->where('status', 'forcado')->count() }}</h3>
+                    <h3 class="mb-0">{{ $contadoresGerais['forcado'] ?? 'N/A' }}</h3>
                     <p class="mb-0"><i class="fas fa-exclamation-triangle"></i> Forçado</p>
                 </div>
             </div>
@@ -633,7 +633,7 @@
         <div class="col-md-2">
             <div class="card bg-info text-white" data-status="solicitacao_retirada" title="Clique para filtrar">
                 <div class="card-body text-center">
-                    <h3 class="mb-0">{{ $forcings->where('status', 'solicitacao_retirada')->count() }}</h3>
+                    <h3 class="mb-0">{{ $contadoresGerais['solicitacao_retirada'] ?? 'N/A' }}</h3>
                     <p class="mb-0"><i class="fas fa-paper-plane"></i> Sol. Retirada</p>
                 </div>
             </div>
@@ -641,7 +641,7 @@
         <div class="col-md-2">
             <div class="card bg-dark text-white" data-status="retirado" title="Clique para filtrar">
                 <div class="card-body text-center">
-                    <h3 class="mb-0">{{ $forcings->where('status', 'retirado')->count() }}</h3>
+                    <h3 class="mb-0">{{ $contadoresGerais['retirado'] ?? 'N/A' }}</h3>
                     <p class="mb-0"><i class="fas fa-check-double"></i> Retirado</p>
                 </div>
             </div>
@@ -649,7 +649,7 @@
         <div class="col-md-2">
             <div class="card bg-primary text-white" title="Forcing executados">
                 <div class="card-body text-center">
-                    <h3 class="mb-0">{{ $forcings->where('status_execucao', 'executado')->count() }}</h3>
+                    <h3 class="mb-0">{{ $contadoresGerais['executado'] ?? 'N/A' }}</h3>
                     <p class="mb-0"><i class="fas fa-tools"></i> Executados</p>
                 </div>
             </div>
@@ -690,6 +690,136 @@ function aplicarBuscaRapida() {
         document.getElementById('filtroForm').submit();
     }
 }
+
+// AJAX Refresh da Tabela com atualização dos cards
+function refreshTable() {
+    const btn = document.getElementById('refreshTableBtn');
+    const icon = document.getElementById('refreshIcon');
+    const tableContainer = document.getElementById('table-container');
+    const paginationContainer = document.getElementById('pagination-container');
+    
+    // Desabilitar botão e mostrar loading
+    btn.disabled = true;
+    icon.classList.add('fa-spin');
+    
+    // Adicionar efeito visual à tabela
+    if (tableContainer) {
+        tableContainer.style.opacity = '0.6';
+    }
+    
+    // Preparar dados do formulário de filtros
+    const formData = new FormData(document.getElementById('filtroForm'));
+    const params = new URLSearchParams(formData);
+    
+    // Fazer requisição AJAX
+    fetch(`{{ route('forcing.refresh-table') }}`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Atualizar tabela
+            if (tableContainer && data.html) {
+                tableContainer.innerHTML = data.html;
+            }
+            
+            // Atualizar paginação
+            if (paginationContainer && data.pagination) {
+                paginationContainer.innerHTML = data.pagination;
+            }
+            
+            // Atualizar modais
+            const modalsContainer = document.querySelector('[data-modals-container]');
+            if (modalsContainer && data.modals) {
+                modalsContainer.innerHTML = data.modals;
+            }
+            
+            // Atualizar cards com contadores gerais
+            if (data.contadoresGerais) {
+                updateStatusCards(data.contadoresGerais);
+            }
+            
+            // Reativar modais do Bootstrap
+            if (typeof bootstrap !== 'undefined') {
+                document.querySelectorAll('[data-bs-toggle="modal"]').forEach(element => {
+                    new bootstrap.Modal(document.querySelector(element.getAttribute('data-bs-target')));
+                });
+            }
+            
+            // Mostrar notificação de sucesso
+            showUpdateNotification(data.total, data.timestamp);
+        } else {
+            throw new Error(data.message || 'Erro desconhecido');
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao atualizar tabela:', error);
+        showErrorNotification('Erro ao atualizar a lista. Tente novamente.');
+    })
+    .finally(() => {
+        // Restaurar botão e tabela
+        btn.disabled = false;
+        icon.classList.remove('fa-spin');
+        
+        if (tableContainer) {
+            tableContainer.style.opacity = '1';
+        }
+    });
+}
+
+// Função para atualizar os cards de status
+function updateStatusCards(contadores) {
+    // Atualizar card Pendente
+    const pendenteCard = document.querySelector('[data-status="pendente"] h3');
+    if (pendenteCard) pendenteCard.textContent = contadores.pendente;
+    
+    // Atualizar card Liberado
+    const liberadoCard = document.querySelector('[data-status="liberado"] h3');
+    if (liberadoCard) liberadoCard.textContent = contadores.liberado;
+    
+    // Atualizar card Forçado
+    const forcadoCard = document.querySelector('[data-status="forcado"] h3');
+    if (forcadoCard) forcadoCard.textContent = contadores.forcado;
+    
+    // Atualizar card Solicitação Retirada
+    const solicitacaoCard = document.querySelector('[data-status="solicitacao_retirada"] h3');
+    if (solicitacaoCard) solicitacaoCard.textContent = contadores.solicitacao_retirada;
+    
+    // Atualizar card Retirado
+    const retiradoCard = document.querySelector('[data-status="retirado"] h3');
+    if (retiradoCard) retiradoCard.textContent = contadores.retirado;
+    
+    // Atualizar card Executados
+    const executadoCard = document.querySelector('.card.bg-primary h3');
+    if (executadoCard) executadoCard.textContent = contadores.executado;
+}
+
+// Função para mostrar notificação de sucesso
+function showUpdateNotification(total, timestamp) {
+    // Implementar notificação se necessário
+    console.log(`Tabela atualizada: ${total} registros em ${timestamp}`);
+}
+
+// Função para mostrar notificação de erro
+function showErrorNotification(message) {
+    // Implementar notificação de erro se necessário
+    console.error(message);
+}
+
+// Adicionar evento ao botão de refresh
+document.addEventListener('DOMContentLoaded', function() {
+    const refreshBtn = document.getElementById('refreshTableBtn');
+    if (refreshBtn) {
+        // Remover o onclick inline e adicionar event listener
+        refreshBtn.removeAttribute('onclick');
+        refreshBtn.addEventListener('click', refreshTable);
+    }
+});
 </script>
 
 <style>
