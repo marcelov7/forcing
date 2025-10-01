@@ -3,6 +3,7 @@
 @section('title', 'Lista de Forcing')
 
 @section('content')
+<div class="forcing-page">
 <div class="container-fluid px-3">
 <!-- Header responsivo -->
 <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3">
@@ -11,12 +12,24 @@
         <small class="text-muted">Sistema de gerenciamento de forcing</small>
     </div>
     <div class="d-flex flex-column flex-sm-row gap-2">
+        <!-- Toggle de Visualização -->
+        <div class="btn-group" role="group" aria-label="Modo de visualização">
+            <button type="button" id="viewListBtn" class="btn btn-outline-primary btn-sm active" title="Visualização em Lista">
+                <i class="fas fa-list-ul"></i> 
+                <span class="d-none d-sm-inline">Lista</span>
+            </button>
+            <button type="button" id="viewCardsBtn" class="btn btn-outline-primary btn-sm" title="Visualização em Cards">
+                <i class="fas fa-th-large"></i> 
+                <span class="d-none d-sm-inline">Cards</span>
+            </button>
+        </div>
+        
         <button id="refreshTableBtn" class="btn btn-outline-primary btn-sm" title="Atualizar Lista">
             <i class="fas fa-sync-alt" id="refreshIcon"></i> 
             <span class="d-none d-sm-inline">Atualizar</span>
         </button>
         <a href="{{ route('forcing.terms') }}" class="btn btn-primary btn-sm">
-            <i class="fas fa-plus"></i> <span class="d-none d-sm-inline">Novo Forcing</span>
+            <i class="fas fa-plus-circle"></i> <span class="d-none d-sm-inline">Novo Forcing</span>
         </a>
     </div>
 </div>
@@ -604,6 +617,94 @@
         @endforeach
     </div>
 
+    <!-- Visualização em Cards (inicialmente oculta) -->
+    <div id="cardsView" class="d-none">
+        <div class="row g-2 mb-3">
+            @foreach($forcings as $forcing)
+            <div class="col-lg-4 col-md-6">
+                <div class="card forcing-card h-100" data-status="{{ $forcing->status }}">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <span class="badge bg-{{ $forcing->status_cor }} me-2">{{ $forcing->status_texto }}</span>
+                            <small class="text-muted">#{{ $forcing->id }}</small>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ route('forcing.show', $forcing) }}">
+                                    <i class="fas fa-eye me-2"></i>Ver detalhes
+                                </a></li>
+                                @can('update', $forcing)
+                                <li><a class="dropdown-item" href="{{ route('forcing.edit', $forcing) }}">
+                                    <i class="fas fa-edit me-2"></i>Editar
+                                </a></li>
+                                @endcan
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            <a href="{{ route('forcing.show', $forcing) }}" class="text-decoration-none">
+                                {{ $forcing->tag }}
+                            </a>
+                        </h6>
+                        <p class="card-text text-muted small">{{ $forcing->descricao_equipamento }}</p>
+                        
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <small class="text-muted d-block">Área</small>
+                                <span class="badge bg-secondary">{{ $forcing->area }}</span>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted d-block">Situação</small>
+                                <span class="badge bg-info">{{ $forcing->situacao_equipamento }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-user-circle text-primary me-2"></i>
+                            <div>
+                                <div class="fw-semibold small">{{ $forcing->user->name }}</div>
+                                <small class="text-muted">{{ $forcing->user->username }}</small>
+                            </div>
+                        </div>
+                        
+                        @if($forcing->liberador)
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-user-check text-success me-2"></i>
+                            <div>
+                                <div class="fw-semibold small">{{ $forcing->liberador->name }}</div>
+                                <small class="text-muted">Liberador</small>
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                    <div class="card-footer bg-light">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar me-1"></i>
+                                {{ $forcing->data_forcing->format('d/m/Y H:i') }}
+                            </small>
+                            <div class="d-flex gap-1">
+                                <a href="{{ route('forcing.show', $forcing) }}" class="btn btn-sm btn-outline-primary" title="Ver detalhes">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                @can('update', $forcing)
+                                <a href="{{ route('forcing.edit', $forcing) }}" class="btn btn-sm btn-outline-warning" title="Editar">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                @endcan
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+
     <!-- Resumo dos status - Contadores gerais (não paginados) -->
     <div class="row mt-4">
         <div class="col-md-2">
@@ -673,6 +774,7 @@
 @endif
 
 </div> <!-- Fechamento do container-fluid -->
+</div> <!-- Fechamento da div forcing-page -->
 
 <script>
 // Função para aplicar filtros rápidos
@@ -811,6 +913,67 @@ function showErrorNotification(message) {
     console.error(message);
 }
 
+// Sistema de alternância entre Lista e Cards
+function initViewToggle() {
+    const viewListBtn = document.getElementById('viewListBtn');
+    const viewCardsBtn = document.getElementById('viewCardsBtn');
+    const tableView = document.getElementById('table-container');
+    const cardsView = document.getElementById('cardsView');
+    
+    // Verificar preferência salva
+    const savedView = localStorage.getItem('forcingViewMode') || 'list';
+    
+    // Aplicar visualização salva
+    if (savedView === 'cards') {
+        showCardsView();
+    } else {
+        showListView();
+    }
+    
+    // Event listeners para os botões
+    viewListBtn.addEventListener('click', function() {
+        showListView();
+        localStorage.setItem('forcingViewMode', 'list');
+    });
+    
+    viewCardsBtn.addEventListener('click', function() {
+        showCardsView();
+        localStorage.setItem('forcingViewMode', 'cards');
+    });
+    
+    function showListView() {
+        // Atualizar botões
+        viewListBtn.classList.add('active');
+        viewCardsBtn.classList.remove('active');
+        
+        // Mostrar tabela, ocultar cards
+        if (tableView) tableView.classList.remove('d-none');
+        if (cardsView) cardsView.classList.add('d-none');
+        
+        // Atualizar título do botão de refresh
+        const refreshBtn = document.getElementById('refreshTableBtn');
+        if (refreshBtn) {
+            refreshBtn.title = 'Atualizar Lista';
+        }
+    }
+    
+    function showCardsView() {
+        // Atualizar botões
+        viewCardsBtn.classList.add('active');
+        viewListBtn.classList.remove('active');
+        
+        // Mostrar cards, ocultar tabela
+        if (cardsView) cardsView.classList.remove('d-none');
+        if (tableView) tableView.classList.add('d-none');
+        
+        // Atualizar título do botão de refresh
+        const refreshBtn = document.getElementById('refreshTableBtn');
+        if (refreshBtn) {
+            refreshBtn.title = 'Atualizar Cards';
+        }
+    }
+}
+
 // Adicionar evento ao botão de refresh
 document.addEventListener('DOMContentLoaded', function() {
     const refreshBtn = document.getElementById('refreshTableBtn');
@@ -819,6 +982,9 @@ document.addEventListener('DOMContentLoaded', function() {
         refreshBtn.removeAttribute('onclick');
         refreshBtn.addEventListener('click', refreshTable);
     }
+    
+    // Inicializar sistema de alternância
+    initViewToggle();
 });
 </script>
 
@@ -827,7 +993,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /* Container principal responsivo */
 .table-responsive-container {
-    min-height: 400px;
+    min-height: auto;
     display: flex;
     flex-direction: column;
 }
@@ -888,7 +1054,7 @@ document.addEventListener('DOMContentLoaded', function() {
 /* ===== RESPONSIVIDADE MÓVEL ===== */
 @media (max-width: 767.98px) {
     .table-responsive-container {
-        min-height: 300px;
+        min-height: auto;
     }
     
     .table-responsive table {

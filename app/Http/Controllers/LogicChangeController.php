@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\LogicChange;
 use App\Models\User;
+use App\Mail\LogicChangeImplemented;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
 class LogicChangeController extends Controller
@@ -259,7 +262,7 @@ class LogicChangeController extends Controller
 
         $logicChange->update([
             'aprovacao_gerente_manutencao' => now(),
-            'gerente_manutencao_id' => auth()->id(),
+            'gerente_manutencao_id' => Auth::id(),
             'observacoes_gerente_manutencao' => $request->observacoes_gerente_manutencao,
         ]);
 
@@ -279,7 +282,7 @@ class LogicChangeController extends Controller
 
         $logicChange->update([
             'aprovacao_coordenador_manutencao' => now(),
-            'coordenador_manutencao_id' => auth()->id(),
+            'coordenador_manutencao_id' => Auth::id(),
             'observacoes_coordenador_manutencao' => $request->observacoes_coordenador_manutencao,
         ]);
 
@@ -299,7 +302,7 @@ class LogicChangeController extends Controller
 
         $logicChange->update([
             'aprovacao_tecnico_especialista' => now(),
-            'tecnico_especialista_id' => auth()->id(),
+            'tecnico_especialista_id' => Auth::id(),
             'observacoes_tecnico_especialista' => $request->observacoes_tecnico_especialista,
         ]);
 
@@ -332,12 +335,52 @@ class LogicChangeController extends Controller
             'status' => LogicChange::STATUS_IMPLEMENTADO,
             'data_implementacao' => $request->data_implementacao,
             'observacoes_implementacao' => $request->observacoes_implementacao,
-            'implementado_por_id' => auth()->id(),
+            'implementado_por_id' => Auth::id(),
             'implementado_em' => now(),
         ]);
 
+        // Enviar email para o solicitante
+        try {
+            $solicitante = $logicChange->user;
+            
+            Log::info('Iniciando envio de email de implementação', [
+                'logic_change_id' => $logicChange->id,
+                'solicitante_existe' => $solicitante ? 'sim' : 'nao',
+                'solicitante_email' => $solicitante ? $solicitante->email : 'sem_usuario',
+                'solicitante_perfil' => $solicitante ? $solicitante->perfil : 'sem_perfil'
+            ]);
+            
+            if ($solicitante && $solicitante->email) {
+                Log::info('Enviando email via Mail::to()', [
+                    'logic_change_id' => $logicChange->id,
+                    'email_destino' => $solicitante->email
+                ]);
+                
+                Mail::to($solicitante->email)->send(new LogicChangeImplemented($logicChange));
+                
+                Log::info('Email de implementação enviado com sucesso', [
+                    'logic_change_id' => $logicChange->id,
+                    'solicitante_email' => $solicitante->email,
+                    'implementado_por' => Auth::user()->name,
+                    'timestamp' => now()->format('Y-m-d H:i:s')
+                ]);
+            } else {
+                Log::warning('Não foi possível enviar email', [
+                    'logic_change_id' => $logicChange->id,
+                    'motivo' => $solicitante ? 'email_vazio' : 'usuario_nao_encontrado'
+                ]);
+            }
+        } catch (\Exception $e) {
+            Log::error('Erro ao enviar email de implementação', [
+                'logic_change_id' => $logicChange->id,
+                'error' => $e->getMessage(),
+                'error_trace' => $e->getTraceAsString()
+            ]);
+            // Não interromper o fluxo mesmo se o email falhar
+        }
+
         return redirect()->route('logic-changes.show', $logicChange)
-                        ->with('success', 'Alteração marcada como implementada com sucesso!');
+                        ->with('success', 'Alteração marcada como implementada com sucesso! Um email foi enviado para o solicitante.');
     }
 
     /**

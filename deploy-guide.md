@@ -153,3 +153,5 @@ git revert [COMMIT_COM_PROBLEMA]
 - **Logs de erro:** `storage/logs/laravel.log`
 - **Logs do servidor:** `/var/log/apache2/error.log` ou `/var/log/nginx/error.log`
 - **Status do servidor:** `systemctl status apache2` ou `systemctl status nginx`
+
+

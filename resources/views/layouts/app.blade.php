@@ -8,6 +8,18 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
+    <!-- CSS das melhorias de tema -->
+    <link href="{{ asset('css/theme-improvements.css') }}" rel="stylesheet">
+    
+    <!-- CSS específico para cards de resumo mobile -->
+    <link href="{{ asset('css/summary-cards-mobile.css') }}" rel="stylesheet">
+    
+    <!-- CSS para correção do dropdown da navbar -->
+    <link href="{{ asset('css/navbar-dropdown-fix.css') }}" rel="stylesheet">
+    
+    <!-- CSS para melhorias de legibilidade em mobile -->
+    <link href="{{ asset('css/mobile-legibility-fix.css') }}" rel="stylesheet">
+    
     <!-- CSS customizado para mobile e desktop -->
     <style>
         .navbar-nav .nav-link.active {
@@ -146,11 +158,21 @@
                 <ul class="navbar-nav">
                     @auth
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+                               data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-user"></i> {{ auth()->user()->name }}
                                 <span class="badge bg-secondary">{{ ucfirst(auth()->user()->perfil) }}</span>
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li><h6 class="dropdown-header">
+                                    <i class="fas fa-info-circle"></i> Informações
+                                </h6></li>
+                                <li><span class="dropdown-item-text">
+                                    <strong>Solicitante:</strong><br>
+                                    <i class="fas fa-user"></i> {{ auth()->user()->name }}<br>
+                                    <small class="text-muted">{{ auth()->user()->email }}</small>
+                                </span></li>
+                                <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{{ route('profile.show') }}">
                                     <i class="fas fa-user"></i> Meu Perfil
                                 </a></li>

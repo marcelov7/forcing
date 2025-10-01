@@ -68,9 +68,9 @@
             <div class="tools-gallery w-100 p-5">
                 <div class="text-center mb-5">
                     <h3 class="text-white fw-bold mb-3">
-                        <i class="fas fa-industry me-2"></i>Automação Industrial
+                        <i class="fas fa-industry me-2"></i>Ecossistema DevAxis
                     </h3>
-                    <p class="text-white-50 fs-5">Controle e proteção de sistemas elétricos</p>
+                    <p class="text-white-50 fs-5">Acesse nossas ferramentas integradas</p>
                 </div>
 
                 <div class="row g-4">

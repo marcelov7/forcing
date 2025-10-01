@@ -1,0 +1,455 @@
+/*
+ * 🚀 Layout Mobile Moderno para Forcing - Sistema Otimizado
+ * Design inspirado em apps modernos com UX superior
+ * Data: 01/10/2025
+ */
+
+/* ===== VARIÁVEIS DE CORES MODERNAS ===== */
+:root {
+    /* Paleta de cores do sistema */
+    --color-pendente: #6c757d;
+    --color-liberado: #28a745;
+    --color-forcado: #ffc107;
+    --color-solicitacao: #17a2b8;
+    --color-retirado: #343a40;
+    
+    /* Cores de fundo suaves */
+    --bg-pendente: rgba(108, 117, 125, 0.1);
+    --bg-liberado: rgba(40, 167, 69, 0.1);
+    --bg-forcado: rgba(255, 193, 7, 0.15);
+    --bg-solicitacao: rgba(23, 162, 184, 0.1);
+    --bg-retirado: rgba(52, 58, 64, 0.1);
+    
+    /* Design system */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.15);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== CONTAINER PRINCIPAL ===== */
+.mobile-forcing-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 8px;
+}
+
+/* ===== ITEM DE FORCING ===== */
+.mobile-forcing-item {
+    background: white;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-light);
+    overflow: hidden;
+    position: relative;
+    transition: var(--transition);
+    border: 1px solid #e9ecef;
+}
+
+.mobile-forcing-item:hover {
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-2px);
+}
+
+.mobile-forcing-item:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-light);
+}
+
+/* ===== BARRA DE STATUS LATERAL ===== */
+.status-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    z-index: 1;
+}
+
+.status-bar.status-pendente {
+    background: linear-gradient(to bottom, var(--color-pendente), rgba(108, 117, 125, 0.7));
+}
+
+.status-bar.status-liberado {
+    background: linear-gradient(to bottom, var(--color-liberado), rgba(40, 167, 69, 0.7));
+}
+
+.status-bar.status-forcado {
+    background: linear-gradient(to bottom, var(--color-forcado), rgba(255, 193, 7, 0.7));
+    width: 6px; /* Mais largo para destaque */
+}
+
+.status-bar.status-solicitacao_retirada {
+    background: linear-gradient(to bottom, var(--color-solicitacao), rgba(23, 162, 184, 0.7));
+}
+
+.status-bar.status-retirado {
+    background: linear-gradient(to bottom, var(--color-retirado), rgba(52, 58, 64, 0.7));
+}
+
+/* ===== CONTEÚDO PRINCIPAL ===== */
+.forcing-content {
+    padding: 16px 16px 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ===== HEADER DO FORCING ===== */
+.forcing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.forcing-tag {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #212529;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ===== BADGE DE STATUS ===== */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 2px solid transparent;
+}
+
+.status-badge.status-pendente {
+    background: var(--bg-pendente);
+    color: var(--color-pendente);
+    border-color: var(--color-pendente);
+}
+
+.status-badge.status-liberado {
+    background: var(--bg-liberado);
+    color: var(--color-liberado);
+    border-color: var(--color-liberado);
+}
+
+.status-badge.status-forcado {
+    background: var(--bg-forcado);
+    color: #856404;
+    border-color: var(--color-forcado);
+    animation: pulse-warning 2s ease-in-out infinite;
+}
+
+@keyframes pulse-warning {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.status-badge.status-solicitacao_retirada {
+    background: var(--bg-solicitacao);
+    color: var(--color-solicitacao);
+    border-color: var(--color-solicitacao);
+}
+
+.status-badge.status-retirado {
+    background: var(--bg-retirado);
+    color: var(--color-retirado);
+    border-color: var(--color-retirado);
+    opacity: 0.8;
+}
+
+/* ===== INFORMAÇÕES ESSENCIAIS ===== */
+.forcing-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.equipment-desc {
+    font-size: 0.9rem;
+    color: #495057;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+.area-time {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.area, .time {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 500;
+}
+
+/* ===== AÇÕES RÁPIDAS ===== */
+.quick-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: #f8f9fa;
+    color: #495057;
+    text-decoration: none;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.action-btn:hover {
+    transform: scale(1.1);
+    color: white;
+}
+
+.action-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: currentColor;
+    opacity: 0;
+    transition: var(--transition);
+    z-index: -1;
+}
+
+.action-btn:hover::before {
+    opacity: 1;
+}
+
+.view-btn:hover {
+    color: #007bff;
+}
+
+.edit-btn:hover {
+    color: #ffc107;
+}
+
+.expand-btn:hover {
+    color: #28a745;
+}
+
+.expand-btn.expanded i {
+    transform: rotate(180deg);
+}
+
+/* ===== DETALHES EXPANDÍVEIS ===== */
+.forcing-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+}
+
+.forcing-details.expanded {
+    max-height: 300px;
+}
+
+.detail-section {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-value {
+    font-size: 0.9rem;
+    color: #212529;
+    font-weight: 500;
+    word-wrap: break-word;
+}
+
+/* ===== RESPONSIVIDADE PARA MOBILE ===== */
+@media (max-width: 768px) {
+    .mobile-forcing-container {
+        gap: 8px;
+        padding: 4px;
+    }
+    
+    .mobile-forcing-item {
+        border-radius: var(--radius-sm);
+    }
+    
+    .forcing-content {
+        padding: 12px 12px 12px 16px;
+        gap: 10px;
+    }
+    
+    .forcing-header {
+        gap: 8px;
+    }
+    
+    .forcing-tag {
+        font-size: 1rem;
+    }
+    
+    .status-badge {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+        gap: 4px;
+    }
+    
+    .equipment-desc {
+        font-size: 0.85rem;
+    }
+    
+    .area-time {
+        font-size: 0.75rem;
+    }
+    
+    .action-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+    
+    .detail-section {
+        padding: 12px;
+        gap: 10px;
+    }
+}
+
+/* ===== MELHORIAS PARA TABLETS ===== */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .mobile-forcing-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        padding: 12px;
+    }
+    
+    .mobile-forcing-item {
+        margin-bottom: 0;
+    }
+}
+
+/* ===== ANIMAÇÕES DE ENTRADA ===== */
+.mobile-forcing-item {
+    animation: slideInUp 0.4s ease-out;
+}
+
+.mobile-forcing-item:nth-child(odd) {
+    animation-delay: 0.1s;
+}
+
+.mobile-forcing-item:nth-child(even) {
+    animation-delay: 0.2s;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== ESTADOS DE CARREGAMENTO ===== */
+.mobile-forcing-container.loading .mobile-forcing-item {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* ===== MODO ESCURO ===== */
+@media (prefers-color-scheme: dark) {
+    .mobile-forcing-item {
+        background: #2d3748;
+        border-color: #4a5568;
+        color: #e2e8f0;
+    }
+    
+    .forcing-tag {
+        color: #e2e8f0;
+    }
+    
+    .equipment-desc {
+        color: #cbd5e0;
+    }
+    
+    .area-time {
+        color: #a0aec0;
+    }
+    
+    .action-btn {
+        background: #4a5568;
+        color: #cbd5e0;
+    }
+    
+    .forcing-details {
+        background: #1a202c;
+        border-color: #4a5568;
+    }
+    
+    .detail-label {
+        color: #a0aec0;
+    }
+    
+    .detail-value {
+        color: #e2e8f0;
+    }
+}
+
+/* ===== ACESSIBILIDADE ===== */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+.action-btn:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+/* ===== OTIMIZAÇÕES DE PERFORMANCE ===== */
+.mobile-forcing-item {
+    will-change: transform, box-shadow;
+}
+
+.status-badge.status-forcado {
+    will-change: transform;
+}

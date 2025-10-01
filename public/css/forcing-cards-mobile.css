@@ -1,0 +1,405 @@
+/*
+ * 🎨 Melhorias para Cards Mobile - Sistema de Forcing
+ * Correções de cores e legibilidade em dispositivos móveis
+ * Data: 01/10/2025
+ */
+
+/* ===== VARIÁVEIS DE CORES PARA CARDS ===== */
+:root {
+    /* Cores sólidas para cada status (igual aos cards de resumo) */
+    --status-pendente: #6c757d;
+    --status-pendente-text: #ffffff;
+    --status-liberado: #28a745;
+    --status-liberado-text: #ffffff;
+    --status-forcado: #ffc107;
+    --status-forcado-text: #212529;
+    --status-solicitacao-retirada: #17a2b8;
+    --status-solicitacao-retirada-text: #ffffff;
+    --status-retirado: #343a40;
+    --status-retirado-text: #ffffff;
+    --status-executado: #007bff;
+    --status-executado-text: #ffffff;
+}
+
+/* ===== ESTILOS PARA CARDS DE FORCING ===== */
+.forcing-card {
+    border: 2px solid #dee2e6;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+.forcing-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== CORES ESPECÍFICAS POR STATUS DO CARD ===== */
+.forcing-card[data-status="pendente"] {
+    background-color: var(--status-pendente) !important;
+    color: var(--status-pendente-text) !important;
+    border: 2px solid var(--status-pendente);
+}
+
+.forcing-card[data-status="pendente"] .card-header,
+.forcing-card[data-status="pendente"] .card-body,
+.forcing-card[data-status="pendente"] .card-footer,
+.forcing-card[data-status="pendente"] .card-title,
+.forcing-card[data-status="pendente"] .card-text,
+.forcing-card[data-status="pendente"] .fw-semibold,
+.forcing-card[data-status="pendente"] small,
+.forcing-card[data-status="pendente"] .text-muted {
+    background: transparent !important;
+    color: var(--status-pendente-text) !important;
+}
+
+.forcing-card[data-status="liberado"] {
+    background-color: var(--status-liberado) !important;
+    color: var(--status-liberado-text) !important;
+    border: 2px solid var(--status-liberado);
+}
+
+.forcing-card[data-status="liberado"] .card-header,
+.forcing-card[data-status="liberado"] .card-body,
+.forcing-card[data-status="liberado"] .card-footer,
+.forcing-card[data-status="liberado"] .card-title,
+.forcing-card[data-status="liberado"] .card-text,
+.forcing-card[data-status="liberado"] .fw-semibold,
+.forcing-card[data-status="liberado"] small,
+.forcing-card[data-status="liberado"] .text-muted {
+    background: transparent !important;
+    color: var(--status-liberado-text) !important;
+}
+
+.forcing-card[data-status="forcado"] {
+    background-color: var(--status-forcado) !important;
+    color: var(--status-forcado-text) !important;
+    border: 2px solid var(--status-forcado);
+    position: relative;
+}
+
+.forcing-card[data-status="forcado"] .card-header,
+.forcing-card[data-status="forcado"] .card-body,
+.forcing-card[data-status="forcado"] .card-footer,
+.forcing-card[data-status="forcado"] .card-title,
+.forcing-card[data-status="forcado"] .card-text,
+.forcing-card[data-status="forcado"] .fw-semibold,
+.forcing-card[data-status="forcado"] small,
+.forcing-card[data-status="forcado"] .text-muted {
+    background: transparent !important;
+    color: var(--status-forcado-text) !important;
+}
+
+/* Destaque especial para forcing - ícone de aviso */
+.forcing-card[data-status="forcado"]::before {
+    content: '⚠️';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.2rem;
+    z-index: 10;
+}
+
+.forcing-card[data-status="solicitacao_retirada"] {
+    background-color: var(--status-solicitacao-retirada) !important;
+    color: var(--status-solicitacao-retirada-text) !important;
+    border: 2px solid var(--status-solicitacao-retirada);
+}
+
+.forcing-card[data-status="solicitacao_retirada"] .card-header,
+.forcing-card[data-status="solicitacao_retirada"] .card-body,
+.forcing-card[data-status="solicitacao_retirada"] .card-footer,
+.forcing-card[data-status="solicitacao_retirada"] .card-title,
+.forcing-card[data-status="solicitacao_retirada"] .card-text,
+.forcing-card[data-status="solicitacao_retirada"] .fw-semibold,
+.forcing-card[data-status="solicitacao_retirada"] small,
+.forcing-card[data-status="solicitacao_retirada"] .text-muted {
+    background: transparent !important;
+    color: var(--status-solicitacao-retirada-text) !important;
+}
+
+.forcing-card[data-status="retirado"] {
+    background-color: var(--status-retirado) !important;
+    color: var(--status-retirado-text) !important;
+    border: 2px solid var(--status-retirado);
+    opacity: 0.9;
+}
+
+.forcing-card[data-status="retirado"] .card-header,
+.forcing-card[data-status="retirado"] .card-body,
+.forcing-card[data-status="retirado"] .card-footer,
+.forcing-card[data-status="retirado"] .card-title,
+.forcing-card[data-status="retirado"] .card-text,
+.forcing-card[data-status="retirado"] .fw-semibold,
+.forcing-card[data-status="retirado"] small,
+.forcing-card[data-status="retirado"] .text-muted {
+    background: transparent !important;
+    color: var(--status-retirado-text) !important;
+}
+
+/* ===== BADGES COM CORES CONTRASTANTES ===== */
+.forcing-card .badge {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    color: currentColor !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+    font-weight: 600;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(4px);
+}
+
+/* Badges específicas por status - cores invertidas para contraste */
+.forcing-card[data-status="pendente"] .badge {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    color: var(--status-pendente) !important;
+    border-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.forcing-card[data-status="liberado"] .badge {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    color: var(--status-liberado) !important;
+    border-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.forcing-card[data-status="forcado"] .badge {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+    color: var(--status-forcado) !important;
+    border-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.forcing-card[data-status="solicitacao_retirada"] .badge {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    color: var(--status-solicitacao-retirada) !important;
+    border-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.forcing-card[data-status="retirado"] .badge {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    color: var(--status-retirado) !important;
+    border-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* ===== MELHORIAS ESPECÍFICAS PARA MOBILE ===== */
+@media (max-width: 768px) {
+    /* Cards em mobile ocupam largura total com margin */
+    .forcing-card {
+        margin-bottom: 1rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+    }
+    
+    /* Ajustar grid para mobile */
+    #cardsView .col-lg-4,
+    #cardsView .col-md-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding: 0 8px;
+        margin-bottom: 1rem;
+    }
+    
+    /* Container de cards com melhor espaçamento */
+    #cardsView .row {
+        margin: 0 -8px;
+    }
+    
+    /* Card header melhor em mobile */
+    .forcing-card .card-header {
+        padding: 0.75rem;
+        background: rgba(255, 255, 255, 0.9);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 8px 8px 0 0;
+    }
+    
+    /* Card body com melhor espaçamento */
+    .forcing-card .card-body {
+        padding: 1rem 0.75rem;
+    }
+    
+    /* Card footer com melhor contraste */
+    .forcing-card .card-footer {
+        padding: 0.75rem;
+        background: rgba(248, 249, 250, 0.8);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 0 0 8px 8px;
+    }
+    
+    /* Ícones com cores contrastantes */
+    .forcing-card .text-primary,
+    .forcing-card .fas {
+        color: rgba(255, 255, 255, 0.9) !important;
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+    }
+    
+    /* Botões com melhor contraste nos cards coloridos */
+    .forcing-card .btn-outline-primary {
+        background-color: rgba(255, 255, 255, 0.9) !important;
+        border-color: rgba(255, 255, 255, 0.9) !important;
+        color: #007bff !important;
+    }
+    
+    .forcing-card .btn-outline-primary:hover {
+        background-color: rgba(255, 255, 255, 1) !important;
+        border-color: rgba(255, 255, 255, 1) !important;
+        color: #0056b3 !important;
+        transform: scale(1.05);
+    }
+    
+    .forcing-card .btn-outline-warning {
+        background-color: rgba(255, 255, 255, 0.9) !important;
+        border-color: rgba(255, 255, 255, 0.9) !important;
+        color: #856404 !important;
+    }
+    
+    .forcing-card .btn-outline-warning:hover {
+        background-color: rgba(255, 255, 255, 1) !important;
+        border-color: rgba(255, 255, 255, 1) !important;
+        color: #533f03 !important;
+        transform: scale(1.05);
+    }
+    
+    /* Botões com melhor contraste */
+    .forcing-card .btn-outline-primary {
+        border-color: #007bff;
+        color: #007bff;
+        background: white;
+    }
+    
+    .forcing-card .btn-outline-primary:hover {
+        background: #007bff;
+        color: white;
+    }
+    
+    .forcing-card .btn-outline-warning {
+        border-color: #ffc107;
+        color: #856404;
+        background: white;
+    }
+    
+    .forcing-card .btn-outline-warning:hover {
+        background: #ffc107;
+        color: #212529;
+    }
+    
+    /* Dropdown com contraste nos cards coloridos */
+    .forcing-card .dropdown-toggle {
+        background-color: rgba(255, 255, 255, 0.9) !important;
+        border-color: rgba(255, 255, 255, 0.9) !important;
+        color: #495057 !important;
+        padding: 0.375rem 0.75rem;
+    }
+    
+    .forcing-card .dropdown-toggle:hover {
+        background-color: rgba(255, 255, 255, 1) !important;
+        border-color: rgba(255, 255, 255, 1) !important;
+        transform: scale(1.05);
+    }
+    
+    /* Menu dropdown com melhor contraste */
+    .forcing-card .dropdown-menu {
+        background: white !important;
+        border: 1px solid #dee2e6;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
+    }
+    
+    .forcing-card .dropdown-item {
+        color: #495057 !important;
+        padding: 0.5rem 1rem;
+    }
+    
+    .forcing-card .dropdown-item:hover {
+        background: #f8f9fa !important;
+        color: #212529 !important;
+    }
+    
+    /* Links do título dos cards */
+    .forcing-card .card-title a {
+        color: inherit !important;
+        text-decoration: none !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    
+    .forcing-card .card-title a:hover {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        transform: scale(1.02);
+        display: inline-block;
+        transition: all 0.2s ease;
+    }
+}
+
+/* ===== MELHORIAS PARA TABLETS ===== */
+@media (min-width: 769px) and (max-width: 992px) {
+    #cardsView .col-lg-4,
+    #cardsView .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+/* ===== MELHORIAS PARA DESKTOP ===== */
+@media (min-width: 993px) {
+    #cardsView .col-lg-4 {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+}
+
+/* ===== ANIMAÇÕES SUAVES ===== */
+.forcing-card {
+    animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== MODO ESCURO AUTOMÁTICO ===== */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --status-pendente-bg: #2d3748;
+        --status-liberado-bg: #22543d;
+        --status-forcado-bg: #744210;
+        --status-solicitacao-retirada-bg: #234e52;
+        --status-retirado-bg: #1a202c;
+        --status-executado-bg: #2a4a7c;
+    }
+    
+    .forcing-card {
+        background: #2d3748;
+        border-color: #4a5568;
+        color: #e2e8f0;
+    }
+    
+    .forcing-card .card-header {
+        background: rgba(45, 55, 72, 0.9);
+        border-bottom-color: #4a5568;
+    }
+    
+    .forcing-card .card-footer {
+        background: rgba(26, 32, 44, 0.8);
+        border-top-color: #4a5568;
+    }
+    
+    .forcing-card .text-muted {
+        color: #a0aec0 !important;
+    }
+    
+    .forcing-card .card-title {
+        color: #e2e8f0;
+    }
+}

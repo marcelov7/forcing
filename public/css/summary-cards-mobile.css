@@ -1,0 +1,297 @@
+/*
+ * 📊 Melhorias para Cards de Resumo Mobile
+ * Foco nos cards de quantidades (Pendente, Liberado, Forçado, etc.)
+ * Data: 01/10/2025
+ */
+
+/* ===== MELHORIAS ESPECÍFICAS PARA CARDS DE RESUMO ===== */
+
+/* Cards de resumo em mobile - melhor visibilidade */
+@media (max-width: 768px) {
+    /* Container dos cards de resumo */
+    .row.mt-4 {
+        margin: 1rem -0.5rem 0 -0.5rem;
+    }
+    
+    /* Ajuste das colunas para mobile */
+    .row.mt-4 .col-md-2 {
+        flex: 0 0 50%; /* 2 cards por linha em mobile */
+        max-width: 50%;
+        padding: 0 0.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    /* Cards de resumo com melhor contraste e tamanho */
+    .row.mt-4 .card {
+        border-radius: 12px !important;
+        border: 2px solid rgba(255, 255, 255, 0.2) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+        transition: all 0.3s ease !important;
+        min-height: 100px !important;
+    }
+    
+    /* Hover/Active effects para mobile */
+    .row.mt-4 .card:active {
+        transform: scale(0.95);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    }
+    
+    /* Card body com padding otimizado */
+    .row.mt-4 .card .card-body {
+        padding: 1rem 0.75rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+    }
+    
+    /* Números grandes e legíveis com texto preto */
+    .row.mt-4 .card h3 {
+        font-size: 2rem !important;
+        font-weight: 800 !important;
+        margin-bottom: 0.5rem !important;
+        color: #000000 !important;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8) !important;
+        line-height: 1 !important;
+    }
+    
+    /* Texto do status com melhor legibilidade - texto preto */
+    .row.mt-4 .card p {
+        font-size: 0.8rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        margin: 0 !important;
+        color: #000000 !important;
+        text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7) !important;
+    }
+    
+    /* Ícones mais visíveis com cor preta */
+    .row.mt-4 .card p i {
+        font-size: 1rem !important;
+        margin-right: 0.5rem !important;
+        color: #000000 !important;
+        text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7) !important;
+    }
+    
+    /* Cores específicas com texto preto para máximo contraste */
+    .row.mt-4 .card.bg-secondary {
+        background-color: #6c757d !important;
+        border-color: #5a6268 !important;
+    }
+    
+    .row.mt-4 .card.bg-secondary h3,
+    .row.mt-4 .card.bg-secondary p,
+    .row.mt-4 .card.bg-secondary i {
+        color: #000000 !important;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    .row.mt-4 .card.bg-success {
+        background-color: #28a745 !important;
+        border-color: #1e7e34 !important;
+    }
+    
+    .row.mt-4 .card.bg-success h3,
+    .row.mt-4 .card.bg-success p,
+    .row.mt-4 .card.bg-success i {
+        color: #000000 !important;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    .row.mt-4 .card.bg-warning {
+        background-color: #ffc107 !important;
+        border-color: #e0a800 !important;
+    }
+    
+    .row.mt-4 .card.bg-warning h3,
+    .row.mt-4 .card.bg-warning p,
+    .row.mt-4 .card.bg-warning i {
+        color: #000000 !important;
+        text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5) !important;
+    }
+    
+    .row.mt-4 .card.bg-info {
+        background-color: #17a2b8 !important;
+        border-color: #117a8b !important;
+    }
+    
+    .row.mt-4 .card.bg-info h3,
+    .row.mt-4 .card.bg-info p,
+    .row.mt-4 .card.bg-info i {
+        color: #000000 !important;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    .row.mt-4 .card.bg-dark {
+        background-color: #343a40 !important;
+        border-color: #23272b !important;
+    }
+    
+    .row.mt-4 .card.bg-dark h3,
+    .row.mt-4 .card.bg-dark p,
+    .row.mt-4 .card.bg-dark i {
+        color: #000000 !important;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.9) !important;
+    }
+    
+    .row.mt-4 .card.bg-primary {
+        background-color: #007bff !important;
+        border-color: #0056b3 !important;
+    }
+    
+    .row.mt-4 .card.bg-primary h3,
+    .row.mt-4 .card.bg-primary p,
+    .row.mt-4 .card.bg-primary i {
+        color: #000000 !important;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    /* Melhor espaçamento entre os cards */
+    .row.mt-4 .col-md-2:nth-child(odd) {
+        padding-left: 0.5rem;
+        padding-right: 0.25rem;
+    }
+    
+    .row.mt-4 .col-md-2:nth-child(even) {
+        padding-left: 0.25rem;
+        padding-right: 0.5rem;
+    }
+}
+
+/* ===== TABLET - 3 cards por linha ===== */
+@media (min-width: 769px) and (max-width: 991px) {
+    .row.mt-4 .col-md-2 {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+        margin-bottom: 1rem;
+    }
+    
+    /* Última linha centralizada se sobrar cards */
+    .row.mt-4 .col-md-2:nth-child(n+7) {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    
+    .row.mt-4 .card {
+        border-radius: 10px !important;
+        min-height: 90px !important;
+    }
+    
+    .row.mt-4 .card h3 {
+        font-size: 1.8rem !important;
+        color: #000000 !important;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    .row.mt-4 .card p {
+        font-size: 0.85rem !important;
+        color: #000000 !important;
+        text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7) !important;
+    }
+    
+    .row.mt-4 .card p i {
+        color: #000000 !important;
+        text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7) !important;
+    }
+}
+
+/* ===== SMARTPHONES MUITO PEQUENOS ===== */
+@media (max-width: 480px) {
+    /* Cards ainda menores para telas muito pequenas */
+    .row.mt-4 .card {
+        min-height: 85px !important;
+        border-radius: 10px !important;
+    }
+    
+    .row.mt-4 .card .card-body {
+        padding: 0.75rem 0.5rem !important;
+    }
+    
+    .row.mt-4 .card h3 {
+        font-size: 1.6rem !important;
+        color: #000000 !important;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    .row.mt-4 .card p {
+        font-size: 0.7rem !important;
+        color: #000000 !important;
+        text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7) !important;
+    }
+    
+    .row.mt-4 .card p i {
+        font-size: 0.85rem !important;
+        margin-right: 0.25rem !important;
+        color: #000000 !important;
+        text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7) !important;
+    }
+    
+    /* Ajuste do espaçamento */
+    .row.mt-4 {
+        margin: 0.75rem -0.25rem 0 -0.25rem;
+    }
+    
+    .row.mt-4 .col-md-2 {
+        padding: 0 0.25rem;
+        margin-bottom: 0.75rem;
+    }
+}
+
+/* ===== ANIMAÇÕES SUAVES ===== */
+.row.mt-4 .card {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.row.mt-4 .col-md-2:nth-child(1) .card { animation-delay: 0.1s; }
+.row.mt-4 .col-md-2:nth-child(2) .card { animation-delay: 0.2s; }
+.row.mt-4 .col-md-2:nth-child(3) .card { animation-delay: 0.3s; }
+.row.mt-4 .col-md-2:nth-child(4) .card { animation-delay: 0.4s; }
+.row.mt-4 .col-md-2:nth-child(5) .card { animation-delay: 0.5s; }
+.row.mt-4 .col-md-2:nth-child(6) .card { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== MODO ESCURO ===== */
+@media (prefers-color-scheme: dark) {
+    .row.mt-4 .card {
+        border-color: rgba(255, 255, 255, 0.1) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    .row.mt-4 .card h3,
+    .row.mt-4 .card p {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+    }
+}
+
+/* ===== ACESSIBILIDADE ===== */
+@media (prefers-reduced-motion: reduce) {
+    .row.mt-4 .card {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Focus para acessibilidade */
+.row.mt-4 .card[data-status]:focus {
+    outline: 3px solid #007bff;
+    outline-offset: 2px;
+}
+
+/* ===== OTIMIZAÇÕES DE PERFORMANCE ===== */
+.row.mt-4 .card {
+    will-change: transform, box-shadow;
+    backface-visibility: hidden;
+    perspective: 1000px;
+}

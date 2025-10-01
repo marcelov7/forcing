@@ -47,3 +47,5 @@ php artisan optimize
 # 11. Verificar se tudo está funcionando
 php artisan --version
 tail -f storage/logs/laravel.log
+
+

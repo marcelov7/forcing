@@ -1,0 +1,136 @@
+/*
+ * 📱 Melhorias de Legibilidade para Mobile
+ * Correções de contraste e visibilidade de textos em dispositivos móveis
+ * Data: 01/10/2025
+ */
+
+/* ===== CORREÇÕES GERAIS DE TEXTO EM MOBILE ===== */
+
+/* Melhor contraste para textos mutados em mobile */
+@media (max-width: 767.98px) {
+    .text-muted {
+        color: #6c757d !important;
+        text-shadow: 0 0 2px rgba(255, 255, 255, 0.5) !important;
+    }
+    
+    /* Texto muted em fundos escuros */
+    .navbar .text-muted,
+    .bg-primary .text-muted,
+    .bg-dark .text-muted,
+    .bg-secondary .text-muted {
+        color: rgba(255, 255, 255, 0.85) !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+    }
+    
+    /* Badges com melhor contraste em mobile */
+    .badge {
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        text-shadow: none !important;
+    }
+    
+    .badge.bg-secondary {
+        background-color: #6c757d !important;
+        color: #ffffff !important;
+    }
+    
+    .badge.bg-light {
+        background-color: #f8f9fa !important;
+        color: #212529 !important;
+        border: 1px solid #dee2e6 !important;
+    }
+    
+    /* Texto pequeno em mobile */
+    small,
+    .small {
+        font-size: 0.875rem !important;
+        line-height: 1.4 !important;
+    }
+    
+    /* Headers de dropdown em mobile */
+    .dropdown-header {
+        font-weight: 600 !important;
+        font-size: 0.85rem !important;
+        letter-spacing: 0.025em !important;
+    }
+    
+    /* Texto de itens de dropdown */
+    .dropdown-item-text {
+        font-size: 0.9rem !important;
+        line-height: 1.4 !important;
+        padding: 0.5rem 1rem !important;
+    }
+}
+
+/* ===== CORREÇÕES PARA TELAS MUITO PEQUENAS ===== */
+@media (max-width: 575.98px) {
+    /* Fontes ligeiramente maiores em telas muito pequenas */
+    .navbar .nav-link {
+        font-size: 0.95rem !important;
+    }
+    
+    .dropdown-item {
+        font-size: 0.9rem !important;
+        padding: 0.6rem 1rem !important;
+    }
+    
+    .dropdown-item-text {
+        font-size: 0.85rem !important;
+    }
+    
+    .badge {
+        font-size: 0.7rem !important;
+        padding: 0.3rem 0.5rem !important;
+    }
+    
+    /* Melhor espaçamento para informações do usuário */
+    .dropdown-item-text br + small {
+        display: block !important;
+        margin-top: 0.25rem !important;
+    }
+}
+
+/* ===== CORREÇÕES DE ACESSIBILIDADE ===== */
+
+/* Melhores contrastes para daltonismo */
+@media (max-width: 991.98px) {
+    /* Azul mais escuro para links */
+    .navbar .nav-link,
+    .navbar .dropdown-item {
+        transition: all 0.2s ease !important;
+    }
+    
+    /* Foco visível */
+    .navbar .nav-link:focus,
+    .navbar .dropdown-item:focus {
+        outline: 2px solid rgba(255, 255, 255, 0.8) !important;
+        outline-offset: 2px !important;
+        background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    /* Estados de hover mais visíveis */
+    .navbar .dropdown-item:hover {
+        background-color: rgba(255, 255, 255, 0.15) !important;
+        border-radius: 0.25rem !important;
+        margin: 0 0.25rem !important;
+    }
+}
+
+/* ===== PREVENÇÃO DE PROBLEMAS DE CONTRASTE ===== */
+
+/* Garantir que texto preto seja realmente preto */
+.text-dark {
+    color: #212529 !important;
+}
+
+/* Garantir que texto branco seja realmente branco */
+.text-white {
+    color: #ffffff !important;
+}
+
+/* Melhor contraste para texto em fundos coloridos */
+.bg-primary .text-light,
+.bg-dark .text-light,
+.bg-info .text-light {
+    color: #f8f9fa !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
+}

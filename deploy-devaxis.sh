@@ -67,3 +67,5 @@ echo "📊 Para monitorar logs:"
 echo "   tail -f storage/logs/laravel.log"
 echo ""
 echo "🌐 Acesse: https://forcing.devaxis.com.br"
+
+

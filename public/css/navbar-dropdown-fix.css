@@ -1,0 +1,332 @@
+/*
+ * 🔧 Correção do Menu Dropdown do Perfil
+ * Fix para dropdown que fica escondido atrás de outros componentes
+ * Data: 01/10/2025
+ */
+
+/* ===== CORREÇÕES PARA NAVBAR DROPDOWN ===== */
+
+/* Navbar principal com z-index alto */
+.navbar {
+    z-index: 1030 !important;
+    position: relative !important;
+}
+
+/* Dropdown menu do perfil com z-index ainda maior */
+.navbar .dropdown-menu {
+    z-index: 1050 !important;
+    position: absolute !important;
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    border-radius: 0.375rem !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    background-color: #ffffff !important;
+    min-width: 220px !important;
+    margin-top: 0.125rem !important;
+}
+
+/* Dropdown do perfil especificamente */
+#navbarDropdown + .dropdown-menu {
+    z-index: 1055 !important;
+    right: 0 !important;
+    left: auto !important;
+}
+
+/* Container da navbar */
+.navbar .container {
+    position: relative !important;
+    z-index: 1030 !important;
+}
+
+/* Dropdown item melhorado */
+.navbar .dropdown-item {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.9rem !important;
+    color: #212529 !important;
+    text-decoration: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    width: 100% !important;
+    text-align: left !important;
+    transition: all 0.2s ease !important;
+}
+
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus {
+    background-color: #f8f9fa !important;
+    color: #1e2125 !important;
+}
+
+/* Dropdown divider melhorado */
+.navbar .dropdown-divider {
+    height: 0 !important;
+    margin: 0.5rem 0 !important;
+    overflow: hidden !important;
+    border-top: 1px solid #dee2e6 !important;
+}
+
+/* Badge do perfil no dropdown toggle */
+.navbar .nav-link .badge {
+    font-size: 0.7rem !important;
+    margin-left: 0.5rem !important;
+    padding: 0.25rem 0.5rem !important;
+}
+
+/* ===== CORREÇÕES ESPECÍFICAS PARA TELAS GRANDES ===== */
+@media (min-width: 992px) {
+    /* Navbar em telas grandes */
+    .navbar {
+        z-index: 1040 !important;
+    }
+    
+    /* Dropdown menu em telas grandes */
+    .navbar .dropdown-menu {
+        z-index: 1060 !important;
+        position: absolute !important;
+        transform: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transition: all 0.15s ease-in-out !important;
+        top: 100% !important;
+        right: 0 !important;
+        left: auto !important;
+        margin-top: 0.25rem !important;
+    }
+    
+    /* Dropdown menu quando mostrado */
+    .navbar .dropdown-menu.show {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+    }
+    
+    /* Dropdown toggle melhorado */
+    .navbar .dropdown-toggle {
+        position: relative !important;
+    }
+    
+    .navbar .dropdown-toggle::after {
+        transition: transform 0.15s ease-in-out !important;
+    }
+    
+    .navbar .dropdown-toggle[aria-expanded="true"]::after {
+        transform: rotate(180deg) !important;
+    }
+}
+
+/* ===== CORREÇÕES PARA COMPONENTES CONFLITANTES ===== */
+
+/* Garantir que cards, modais e outros elementos não sobreponham o menu */
+.card,
+.table-responsive,
+.forcing-page,
+.container-fluid,
+.mobile-forcing-container {
+    z-index: auto !important;
+}
+
+/* Modais devem ficar acima do dropdown */
+.modal {
+    z-index: 1055 !important;
+}
+
+.modal-backdrop {
+    z-index: 1050 !important;
+}
+
+/* Tooltips devem ficar acima do dropdown */
+.tooltip {
+    z-index: 1070 !important;
+}
+
+/* Popovers devem ficar acima do dropdown */
+.popover {
+    z-index: 1065 !important;
+}
+
+/* ===== MELHORIAS VISUAIS DO DROPDOWN ===== */
+
+/* Header do dropdown */
+.navbar .dropdown-header {
+    padding: 0.5rem 1rem 0.25rem 1rem !important;
+    margin-bottom: 0 !important;
+    font-size: 0.8rem !important;
+    color: #6c757d !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    font-weight: 600 !important;
+}
+
+/* Texto informativo no dropdown */
+.navbar .dropdown-item-text {
+    padding: 0.5rem 1rem !important;
+    color: #212529 !important;
+    white-space: normal !important;
+    line-height: 1.4 !important;
+}
+
+.navbar .dropdown-item-text strong {
+    color: #495057 !important;
+    font-size: 0.8rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* Animação suave para o dropdown */
+.navbar .dropdown-menu {
+    animation: dropdownFadeIn 0.15s ease-in-out !important;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Sombra melhorada para o dropdown */
+.navbar .dropdown-menu {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Ícones nos itens do dropdown */
+.navbar .dropdown-item i {
+    width: 16px !important;
+    margin-right: 0.75rem !important;
+    color: #6c757d !important;
+}
+
+.navbar .dropdown-item:hover i {
+    color: #495057 !important;
+}
+
+/* ===== CORREÇÕES PARA MOBILE ===== */
+@media (max-width: 991.98px) {
+    /* Em mobile o dropdown se comporta diferente */
+    .navbar .dropdown-menu {
+        position: static !important;
+        float: none !important;
+        width: auto !important;
+        margin-top: 0 !important;
+        background-color: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+    
+    .navbar .dropdown-item {
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+    
+    .navbar .dropdown-item:hover {
+        color: rgba(255, 255, 255, 1) !important;
+        background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    /* Correção específica para informações do usuário em mobile */
+    .navbar .dropdown-item-text {
+        color: rgba(255, 255, 255, 0.95) !important;
+    }
+    
+    .navbar .dropdown-item-text strong {
+        color: rgba(255, 255, 255, 1) !important;
+        font-weight: 600 !important;
+    }
+    
+    /* Correção para texto muted (email) em mobile */
+    .navbar .dropdown-item-text .text-muted {
+        color: rgba(255, 255, 255, 0.85) !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* Header do dropdown em mobile */
+    .navbar .dropdown-header {
+        color: rgba(255, 255, 255, 0.95) !important;
+        font-weight: 600 !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* Badge do perfil em mobile */
+    .navbar .nav-link .badge {
+        background-color: rgba(255, 255, 255, 0.2) !important;
+        color: rgba(255, 255, 255, 1) !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    }
+    
+    /* Ícones em mobile com melhor contraste */
+    .navbar .dropdown-item i,
+    .navbar .dropdown-header i,
+    .navbar .dropdown-item-text i {
+        color: rgba(255, 255, 255, 0.9) !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* Nome do usuário no toggle da navbar em mobile */
+    .navbar .nav-link {
+        color: rgba(255, 255, 255, 0.95) !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    .navbar .nav-link:hover,
+    .navbar .nav-link:focus {
+        color: rgba(255, 255, 255, 1) !important;
+    }
+}
+
+/* ===== CORREÇÕES PARA TABLET ===== */
+@media (min-width: 576px) and (max-width: 991.98px) {
+    /* Melhor contraste em tablets também */
+    .navbar .dropdown-item-text .text-muted {
+        color: rgba(255, 255, 255, 0.8) !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4) !important;
+        font-size: 0.85rem !important;
+    }
+    
+    .navbar .dropdown-item-text strong {
+        color: rgba(255, 255, 255, 1) !important;
+        font-weight: 600 !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
+    }
+}
+
+/* ===== ACESSIBILIDADE ===== */
+.navbar .dropdown-item:focus {
+    outline: 2px solid #0d6efd !important;
+    outline-offset: -2px !important;
+}
+
+/* ===== PREVENÇÃO DE CONFLITOS ===== */
+/* Garantir que o dropdown sempre fique visível */
+.navbar .nav-item.dropdown {
+    position: static !important;
+}
+
+@media (min-width: 992px) {
+    .navbar .nav-item.dropdown {
+        position: relative !important;
+    }
+}
+
+/* Reset de z-index para elementos que podem conflitar */
+.row,
+.col,
+.col-md-2,
+.col-lg-4,
+.col-md-6 {
+    z-index: auto !important;
+}
+
+/* Específico para os cards de resumo que podem conflitar */
+.row.mt-4 {
+    z-index: auto !important;
+    position: relative !important;
+}
+
+.row.mt-4 .card {
+    z-index: auto !important;
+    position: relative !important;
+}

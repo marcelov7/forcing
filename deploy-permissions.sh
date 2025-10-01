@@ -78,3 +78,5 @@ echo "🔍 Verificando permissões críticas..."
 ls -la $PROJECT_DIR/storage/
 ls -la $PROJECT_DIR/bootstrap/cache/
 ls -la $PROJECT_DIR/.env
+
+
